@@ -95,12 +95,14 @@ def input_datasets(datasets, shape=(64, 64, 3)):
     Y = np.hstack((Y, np.ones((len_left_true*2 + len_right_true*2))))
     return input_images, Y
 
-def cal_hog_features(img, orient, pix_per_cell, cell_per_block, vis=False, feature_vec=True):
+def cal_hog_feature(img, orient, pix_per_cell, cell_per_block, vis=False, feature_vec=True):
+    """Extract HOG feature from one color channel"""
     features = hog(img, orientations=orient, pixels_per_cell=(pix_per_cell, pix_per_cell),
                   cells_per_block=(cell_per_block, cell_per_block), transform_sqrt=True, feature_vector=feature_vec)
     return features
 
 def extract_hog_features(image, orient, pix_per_cell, cell_per_block, vis=False, feature_vec=True, hog_color="RGB"):
+    """Extract HOG features from colorspace you specify"""
     if hog_color != 'RGB':
         if hog_color == 'HSV':
             feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
@@ -116,7 +118,7 @@ def extract_hog_features(image, orient, pix_per_cell, cell_per_block, vis=False,
 
     hog_features = []
     for channel in range(feature_image.shape[2]):
-        hog_features.extend(cal_hog_features(feature_image[:,:,channel],
+        hog_features.extend(cal_hog_feature(feature_image[:,:,channel],
                             orient, pix_per_cell, cell_per_block,
                             vis=viz, feature_vec=feature_vec))
 
@@ -124,6 +126,12 @@ def extract_features(images, hog_color='RGB', spatial_color="LUV", hist_color="H
                         hist_bins=32, orient=9,
                         pix_per_cell=8, cell_per_block=2, hog_channel=0,
                         spatial_feat=True, hist_feat=True, hog_feat=True):
+    """Extract features from HOG, color binning, and histogram of color space.
+       You could choose features you wanna use.
+
+       # Returns:
+           features(ndarray): extracted features (1-dimensional array)
+    """
     features = []
     for image in images:
         file_features = []
@@ -140,6 +148,7 @@ def extract_features(images, hog_color='RGB', spatial_color="LUV", hist_color="H
     return np.array(features)
 
 def bin_spatial(image, size=(32, 32), color="RGB"):
+    """binning image of specified color space"""
     if color != 'RGB':
         if color == 'HSV':
             feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
@@ -155,6 +164,7 @@ def bin_spatial(image, size=(32, 32), color="RGB"):
     return cv2.resize(feature_image, size).ravel()
 
 def color_hist(image, nbins=32, bins_range=(0, 256), color="RGB"):
+    """convert RGB Image to specified color space histogram"""
     if color != 'RGB':
         if color == 'HSV':
             feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
