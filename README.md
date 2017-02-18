@@ -22,30 +22,36 @@ The goals / steps of this project are the following:
 ### Histogram of Oriented Gradients (HOG)
 
 #### 1. How to extract HOG features from the training images.
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `main.py`).  
+The code for this step is contained in lines 17 through 42 of the file called `util.py`.  
 
-I started by reading in all the `vehicle` and `non-vehicle` images. Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+I started by reading in all the `vehicle` and `non-vehicle` images. When I see all image directories, there are few images from `left` and `right` view. So I augmented left and right images by using techniques such as flip and brightness conversion. The code for using datasets is contained in lines 65 through 96 of the file called `train.py`.    
+Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+Here is an example using the `YCrCb` color space and HOG parameters of `orientations=18`, `pixels_per_cell=(8, 8)` and `cells_per_block=(3, 3)`:
 
 
 ![alt text][image2]
 
 #### 2. How to settled on final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+First I imitate the parameter of HOG thesis, but the test accuracy is not good. So I increase orientation parameter for extracting more detailed direction of each block gradient, and get more about 2% accuracy.  
+And increasing cells_per_block parameter for extracting more robust features.  
 
 #### 3. How to trained a classifier using extracted features
 
-I trained a linear SVM using...
+I extracted three features `HOG feature`, `binned image` and `histogram of each channel` of YCrCb color image, and standardize extracted features.  
+And then, I trained a linear SVM by using standardized extracted features.   
 
 ### Sliding Window Search
 
-#### 1. How to implemented a sliding window search.  
+#### 1. How to implement a sliding window search.  
+
+I implement a sliding window search by using multiple windows according to the height position of image.  
+
 
 #### 2. How to decide parameter of window size and overlap
 
@@ -88,4 +94,6 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+My pipeline is so slow because of using sliding-window technique. These days, by using convolutional neural network like SSD or YOLO, we can execute both of region proposal and feature sampling simultaneously for object detection.  
+If there are steep slopes, my pipeline couldn't recognize cars because I utilize lower part of image(about half).  
+And If it's rainy, probably my pipeline couldn't classify cars or not correctly because rain makes the features unclearly.  
