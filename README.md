@@ -39,7 +39,7 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 #### 2. How to settled on final choice of HOG parameters.
 
 First I imitate the parameter of HOG thesis, but the test accuracy is not good. So I increase orientation parameter for extracting more detailed direction of each block gradient, and get more about 2% accuracy.  
-And increasing cells_per_block parameter for extracting more robust features.  
+And increasing cells_per_block parameter for extracting more robust features to noise.  
 
 #### 3. How to trained a classifier using extracted features
 
@@ -50,18 +50,27 @@ And then, I trained a linear SVM by using standardized extracted features.
 
 #### 1. How to implement a sliding window search.  
 
-I implement a sliding window search by using multiple windows according to the height position of image.  
+I implement a sliding window search by using multiple windows according to the height position of image. As the height is increasing, the size of window is increasing. This is the last parameter.  
+
+| Height | Window Size |　overlap  |
+|:----:|:----:|:----:|
+| 490 | 50 | 0.9 |
+| 810 | 1280 | 0.9 |
+| 1200 | 1200 | 0.9 |
+| 40 | 40 | 0.9 |
+| 40 | 40 | 0.9 |
 
 
 #### 2. How to decide parameter of window size and overlap
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+As the height is increasing, the size of car is bigger. So The window size is decided based on the height of image.  
+
 
 ![alt text][image3]
 
 #### 3. Show examples of classifier
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
 ![alt text][image4]
 ---
@@ -69,12 +78,13 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 ### Video Implementation
 
 #### 1. Video
-Here's a [link to my video result](./project_video.mp4)
+URL of Youtube
 
 
-#### 2. How to implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. How to implement some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+The code for this step is contained in lines `??` through `??` of the file called `test.py`.  
+From the detected area from previous 3 frames and the result of sliding window search in a target frame, I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. I then assumed each blob corresponded to a vehicle. I constructed bounding boxes to cover the area of each blob detected.  
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
