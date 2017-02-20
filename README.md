@@ -37,7 +37,7 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 
 <!--![alt text][image2]-->
-<div style="text-align:center"><img src="./example_images/features.jpg" width=500 height=350></div>
+<div style="text-align:center"><img src="./example_images/features.jpg" width=1000 height=700></div>
 
 #### 2. How to settled on final choice of HOG parameters.
 
