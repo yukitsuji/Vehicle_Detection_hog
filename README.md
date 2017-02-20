@@ -29,14 +29,15 @@ Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 <!-- ![alt text][image1] -->
 <!-- <img src="./example_images/car_noncar.jpg" align="center"> -->
-<div style="text-align:center"><img src="./example_images/car_noncar.jpg"></div>
+<div style="text-align:center"><img src="./example_images/car_noncar.jpg" width=1000 height=350></div>
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=18`, `pixels_per_cell=(8, 8)` and `cells_per_block=(3, 3)`:
 
 
-![alt text][image2]
+<!--![alt text][image2]-->
+<div style="text-align:center"><img src="./example_images/features.jpg" width=1000 height=700></div>
 
 #### 2. How to settled on final choice of HOG parameters.
 
