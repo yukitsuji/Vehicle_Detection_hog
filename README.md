@@ -27,7 +27,8 @@ The code for this step is contained in lines 17 through 42 of the file called `u
 I started by reading in all the `vehicle` and `non-vehicle` images. When I see all image directories, there are few images from `left` and `right` view. So I augmented left and right images by using techniques such as flip and brightness conversion. The code for using datasets is contained in lines 65 through 96 of the file called `train.py`.    
 Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![alt text][image1]
+<!-- ![alt text][image1] -->
+<img src="./example_images/car_noncar.jpg" align="center">
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
