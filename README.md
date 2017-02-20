@@ -29,7 +29,7 @@ Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 <!-- ![alt text][image1] -->
 <!-- <img src="./example_images/car_noncar.jpg" align="center"> -->
-<div style="text-align:center"><img src="./example_images/car_noncar.jpg" width=500 height=300></div>
+<div style="text-align:center"><img src="./example_images/car_noncar.jpg" width=1000 height=500></div>
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
