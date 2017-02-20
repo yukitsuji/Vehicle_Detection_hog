@@ -36,7 +36,8 @@ I then explored different color spaces and different `skimage.hog()` parameters 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=18`, `pixels_per_cell=(8, 8)` and `cells_per_block=(3, 3)`:
 
 
-![alt text][image2]
+<!--![alt text][image2]-->
+<div style="text-align:center"><img src="./example_images/features.jpg" width=500 height=350></div>
 
 #### 2. How to settled on final choice of HOG parameters.
 
