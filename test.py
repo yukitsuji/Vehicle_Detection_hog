@@ -74,7 +74,7 @@ def search_windows(image, windows, svc, scaler, hog_color="RGB", hog_channel="AL
     on_windows = []
     for window in windows:
         test_img = cv2.resize(image[window[0][1]:window[1][1], window[0][0]:window[1][0]], (64, 64))
-        features = extract_features(test_img, hog_color=hog_color, hog_channel=hog_channel, spatial_feat=spatial_feat,
+        features = extract_feature(test_img, hog_color=hog_color, hog_channel=hog_channel, spatial_feat=spatial_feat,
                                     spatial_size=spatial_size, spatial_color=spatial_color, hist_color=hist_color,
                                     hist_feat=hist_feat, orient=orient, cell_per_block=cell_per_block)
         test_features = scaler.transform(np.array(features).reshape(1, -1))

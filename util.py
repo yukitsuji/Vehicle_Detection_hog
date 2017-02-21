@@ -39,7 +39,8 @@ def extract_hog_features(image, orient, pix_per_cell, cell_per_block, vis=False,
     for channel in range(feature_image.shape[2]):
         hog_features.extend(cal_hog_feature(feature_image[:,:,channel],
                             orient, pix_per_cell, cell_per_block,
-                            vis=viz, feature_vec=feature_vec))
+                            vis=vis, feature_vec=feature_vec))
+    return hog_features
 
 def extract_features(images, hog_color='RGB', spatial_color="LUV", hist_color="HLS", spatial_size=(32, 32),
                         hist_bins=32, orient=9,
@@ -65,6 +66,35 @@ def extract_features(images, hog_color='RGB', spatial_color="LUV", hist_color="H
             file_features.append(hog_features)
         features.append(np.concatenate(file_features))
     return np.array(features)
+
+def extract_feature(image, hog_color='RGB', spatial_color="LUV", hist_color="HLS", spatial_size=(32, 32),
+                        hist_bins=32, orient=9,
+                        pix_per_cell=8, cell_per_block=2, hog_channel=0,
+                        spatial_feat=True, hist_feat=True, hog_feat=True):
+    file_features = []
+    if hog_color != 'RGB':
+        if hog_color == 'HSV':
+            feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+        elif hog_color == 'LUV':
+            feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2LUV)
+        elif hog_color == 'HLS':
+            feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2HLS)
+        elif hog_color == 'YUV':
+            feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
+        elif hog_color == 'YCrCb':
+            feature_image = cv2.cvtColor(image, cv2.COLOR_RGB2YCrCb)
+    else: feature_image = np.copy(image)
+
+    if spatial_feat == True:
+        spatial_features = bin_spatial(image, size=spatial_size, color=spatial_color)
+        file_features.append(spatial_features)
+    if hist_feat == True:
+        hist_features = color_hist(image, nbins=hist_bins, color=hist_color)
+        file_features.append(hist_features)
+    if hog_feat == True:
+        hog_features = extract_hog_features(image, orient, pix_per_cell, cell_per_block, hog_color=hog_color)
+        file_features.append(hog_features)
+    return np.concatenate(file_features)
 
 def bin_spatial(image, size=(32, 32), color="RGB"):
     """binning image of specified color space"""
