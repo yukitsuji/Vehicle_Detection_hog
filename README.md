@@ -92,7 +92,7 @@ From the detected area from previous 4 frames and the result of sliding window s
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ##### Heatmaps of six frame
-<div style="text-align:center"><img src="./example_images/heatmap.jpg" width=1000 height=500></div>
+<div style="text-align:center"><img src="./example_images/heatmap.jpg" width=800 height=800></div>
 
 ##### Output of `scipy.ndimage.measurements.label()` on the integrated heatmap(945 frame in the movie):
 <div style="text-align:center"><img src="./example_images/labels.png" width=1000 height=500></div>
