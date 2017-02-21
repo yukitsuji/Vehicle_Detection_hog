@@ -28,7 +28,6 @@ I started by reading in all the `vehicle` and `non-vehicle` images. When I see a
 Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 <!-- ![alt text][image1] -->
-<!-- <img src="./example_images/car_noncar.jpg" align="center"> -->
 <div style="text-align:center"><img src="./example_images/car_noncar.jpg" width=1000 height=350></div>
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
@@ -55,25 +54,25 @@ And then, I trained a linear SVM by using standardized extracted features.
 
 I implement a sliding window search by using multiple windows according to the height position of image. As the height is increasing, the size of window is increasing. This is the last parameter.  
 
-| Height | Window Size |　overlap  |
+| y place | Width, Height |　overlap  |
 |:----:|:----:|:----:|
-| 490 | 50 | 0.9 |
-| 810 | 1280 | 0.9 |
-| 1200 | 1200 | 0.9 |
-| 40 | 40 | 0.9 |
-| 40 | 40 | 0.9 |
-
+| lower | 200, 170 | 0.9 |
+| lower-middle | 150, 120 | 0.9 |
+| middle | 120, 110 | 0.9 |
+| middle | 120, 96 | 0.9 |
+| upper | 84, 64 | 0.9 |
 
 #### 2. How to decide parameter of window size and overlap
 
 As the height is increasing, the size of car is bigger. So The window size is decided based on the height of image.  
-
+I examined various window sizes, regions and overlap.  
+In the middle area, The size of car is depending on the place. Car in the center is smaller than the side because we can see not only the back, but also the side of the car.  So in the middle range, I prepared two windows.
 
 ![alt text][image3]
 
 #### 3. Show examples of classifier
 
-I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color(16×16) and histograms of YCrCb color space, which provided a nice result.  Here are some example images:
 
 ![alt text][image4]
 ---
@@ -81,7 +80,8 @@ I searched on two scales using YCrCb 3-channel HOG features plus spatially binne
 ### Video Implementation
 
 #### 1. Video
-`URL of Youtube`
+[![ScreenShot](http://img.youtube.com/vi/K-QHdTBfSbI/0.jpg)](https://youtu.be/K-QHdTBfSbI)
+
 
 
 #### 2. How to implement some kind of filter for false positives and some method for combining overlapping bounding boxes.
