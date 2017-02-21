@@ -52,7 +52,8 @@ And then, I trained a linear SVM by using standardized extracted features.
 
 #### 1. How to implement a sliding window search.  
 
-I implement a sliding window search by using multiple windows according to the height position of image. As the height is increasing, the size of window is increasing. This is the last parameter.  
+I implement a sliding window search by using multiple windows according to the height position of image. As the height is increasing, the size of window is increasing.
+And in the image, about the half of it is sky or forests and the lowest part of it is including the own car. So I remove these area for sliding window search. This is the last parameter.  
 
 | y place | Width, Height |　overlap  |
 |:----:|:----:|:----:|
@@ -66,15 +67,14 @@ I implement a sliding window search by using multiple windows according to the h
 
 As the height is increasing, the size of car is bigger. So The window size is decided based on the height of image.  
 I examined various window sizes, regions and overlap.  
-In the middle area, The size of car is depending on the place. Car in the center is smaller than the side because we can see not only the back, but also the side of the car.  So in the middle range, I prepared two windows.
-
-![alt text][image3]
+In the middle area, The size of car is depending on the place. Car in the center looks smaller than the side because we can see not only the back, but also the side of the car.  So in the middle range, I prepared two windows. About the rate of overlap, first I use the smaller parameter when the window size is smaller. But, as the car is smaller, the accuracy of classifier is lower. So I decided all window's overlap is same.   
 
 #### 3. Show examples of classifier
 
 I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color(16×16) and histograms of YCrCb color space, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+<div style="text-align:center"><img src="./example_images/classifier.jpg" width=1000 height=300></div>
+
 ---
 
 ### Video Implementation
@@ -86,20 +86,19 @@ I searched on two scales using YCrCb 3-channel HOG features plus spatially binne
 
 #### 2. How to implement some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-The code for this step is contained in lines `??` through `??` of the file called `test.py`.  
-From the detected area from previous 3 frames and the result of sliding window search in a target frame, I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. I then assumed each blob corresponded to a vehicle. I constructed bounding boxes to cover the area of each blob detected.  
+The code for this step is contained in lines 125 through 135 of the file called `test.py`.  
+From the detected area from previous 4 frames and the result of sliding window search in a target frame, I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. I then assumed each blob corresponded to a vehicle. I constructed bounding boxes to cover the area of each blob detected.  
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ##### Heatmaps of six frames
+<div style="text-align:center"><img src="./example_images/heatmap.jpg" width=1000 height=700></div>
 
-![alt text][image5]
+##### Output of `scipy.ndimage.measurements.label()` on the integrated heatmap(945 frame in the movie):
+<div style="text-align:center"><img src="./example_images/labels.png" width=1000 height=300></div>
 
-##### Output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-##### Resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
+##### Resulting bounding boxes are drawn onto the 945 frame in the moview:
+<div style="text-align:center"><img src="./example_images/detection945.jpg" width=1000 height=300></div>
 
 ---
 
