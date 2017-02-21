@@ -96,10 +96,10 @@ def draw_labeled_bboxes(img, labels):
     return img, bbox_list
 
 def main():
-    scaler = np.load("final.npz")
+    scaler = np.load("scaler.npz")
     X_scaler = StandardScaler()
     X_scaler.mean_, X_scaler.scale_ = scaler["mean"], scaler["scale"]
-    with open("final.pkl", mode="rb") as f:
+    with open("svm.pkl", mode="rb") as f:
         svc = pickle.load(f)
 
     cap = cv2.VideoCapture("project_video.mp4")
