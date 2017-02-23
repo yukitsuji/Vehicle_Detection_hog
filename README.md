@@ -97,7 +97,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ##### Output of `scipy.ndimage.measurements.label()` on the integrated heatmap(945 frame in the movie):
 <div style="text-align:center"><img src="./example_images/labels.png" width=1000 height=500></div>
 
-##### Resulting bounding boxes are drawn onto the 945 frame in the moview:
+##### Resulting bounding boxes are drawn onto the 945 frame in the movie:
 <div style="text-align:center"><img src="./example_images/detection945.jpg" width=1000 height=500></div>
 
 ---
